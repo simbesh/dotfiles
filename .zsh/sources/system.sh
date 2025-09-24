@@ -18,7 +18,9 @@ installs() {
     nixpkgs#fd \
     nixpkgs#ripgrep \
     nixpkgs#ripgrep-all \
-    nixpkgs#pandoc
+    nixpkgs#pandoc \
+    nixpkgs#uv \
+    nixpkgs#bun
 }
 
 # Reload configuration
