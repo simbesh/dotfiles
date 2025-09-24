@@ -26,11 +26,10 @@ zstyle ':completion:*' list-colors '' # Colorize completions
 setopt CORRECT # Command correction
 setopt GLOB_COMPLETE # Tab completion for globs
 
-# Source additional config files
-sources
+source ./zsh/sources/system.sh
 
 # Initialize zoxide
 eval "$(zoxide init zsh)"
 
 # Set zsh as default shell
-chsh -s $(which zsh)
+chsh -s zsh

@@ -8,8 +8,16 @@ sources() {
   fi
 }
 
+# sets up ssh keys and sops/age decryption
+identities() {
+  mkdir -p ~/.config/sops/age
+  cp -rs /mnt/c/users/simon/.ssh ~/.config
+  ssh-to-age -private-key -i ~/.ssh/id_ed25519 >~/.config/sops/age/keys.txt
+}
+
 # Create symlinks for dotfiles in current directory to ~/.config/
 linkdots() {
+  cp -s .zshrc ~/.zshrc
   for item in *; do
     target="$HOME/.config/$item"
     # Remove existing file or symlink to avoid conflicts (even broken symlinks with -L)
@@ -32,6 +40,12 @@ installs() {
 
   nix profile add \
     --extra-experimental-features "nix-command flakes" \
+    nixpkgs#zsh \
+    nixpkgs#just \
+    nixpkgs#sops \
+    nixpkgs#ssh-to-age \
+    nixpkgs#eza \
+    nixpkgs#bat \
     nixpkgs#gcc \
     nixpkgs#zoxide \
     nixpkgs#fzf \
@@ -46,7 +60,9 @@ installs() {
 
 # Reload configuration - runs all setup functions in sequence
 rl() {
+  git pull
   linkdots
+  identities
   sources
   installs
 }
