@@ -27,6 +27,9 @@ installs() {
     --extra-experimental-features "nix-command flakes" \
     "github:smissingham/nix?dir=flakes/apps/smissingham-nvim"
 
+  # Update flake inputs to get latest versions
+  nix flake update --extra-experimental-features "nix-command flakes"
+
   nix profile add \
     --extra-experimental-features "nix-command flakes" \
     nixpkgs#gcc \
